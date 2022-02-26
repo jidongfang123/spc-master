@@ -1,0 +1,41 @@
+server:
+  port: 9003
+spring:
+  application:
+    name: gateway
+  cloud:
+    # 网关配置
+    gateway:
+      # 配置路由规则
+      routes:
+        # 路由ID（一个路由配置一个ID）
+        - id: server-client
+          # 通过注册中心来查找服务（lb代表从注册中心获取服务，并且负载均衡）
+          uri: lb://SERVER-CLIENT
+          # 匹配到的以/product开头的路径都转发到product的服务，相当于访问 lb://PRODUCT-SERVICE/**
+          predicates:
+            - Path=/client/**
+          # 去掉匹配到的路径的第一段
+          filters:
+            - StripPrefix=1
+        # 路由ID（一个路由配置一个ID）
+        - id: server-web
+          # 通过注册中心来查找服务（lb代表从注册中心获取服务，并且负载均衡）
+          uri: lb://SERVER-WEB
+          # 匹配到的以/product开头的路径都转发到product的服务，相当于访问 lb://PRODUCT-SERVICE/**
+          predicates:
+            - Path=/web/**
+          # 去掉匹配到的路径的第一段
+          filters:
+            - StripPrefix=1
+# 把网关注册到注册中心（从注册中心获取服务地址）
+eureka:
+  client:
+    register-with-eureka: true    # 是否将自己注册进eurekaServer，默认true
+    fetchRegistry: true         #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    service-url:
+      defaultZone: http://@eureka.user.name@:@eureka.user.password@@localhost:9001/eureka/   #单机版
+      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
