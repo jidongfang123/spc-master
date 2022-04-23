@@ -14,18 +14,25 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
  */
 @Configuration
 public class CorsConfig implements WebFluxConfigurer{
-
+        /**
+         * 开启跨域
+         */
         @Override
         public void addCorsMappings(CorsRegistry registry) {
+            // 设置允许跨域的路由
             registry.addMapping("/**")
-                    .allowCredentials(true)
+                    // 设置允许跨域请求的域名
                     .allowedOrigins("*")
-                    .allowedHeaders("*")
+                    // 是否允许证书（cookies）
+                    .allowCredentials(true)
+                    // 设置允许的方法
                     .allowedMethods("*")
-                    .exposedHeaders(HttpHeaders.SET_COOKIE);
+                    // 跨域允许时间
+                    .maxAge(3600);
         }
 
-        /**
+
+    /**
          * 跨域过滤器
          * @return
          */
