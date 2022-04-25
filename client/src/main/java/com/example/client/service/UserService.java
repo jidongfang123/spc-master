@@ -4,4 +4,6 @@ import com.example.client.model.User;
 
 public interface UserService {
     String addUser(User user);
+
+    User login(User user);
 }
