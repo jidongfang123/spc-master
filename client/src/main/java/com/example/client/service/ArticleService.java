@@ -1,6 +1,8 @@
 package com.example.client.service;
 
 import com.example.client.model.ArticleDO;
+import com.example.client.util.ResponseVo;
+
 import java.util.Map;
 
 /**
@@ -8,15 +10,15 @@ import java.util.Map;
  */
 public interface ArticleService {
 
-  Map<String, Object> insertSelective(ArticleDO articleDO);
+  ResponseVo insertSelective(ArticleDO articleDO);
 
-  Map<String, Object> getListArticle(ArticleDO articleDO);
+  ResponseVo getListArticle(ArticleDO articleDO);
 
-  Map<String, Object> updateArticle(ArticleDO articleDO);
+  ResponseVo updateArticle(ArticleDO articleDO);
 
-  Map<String, Object> deleteArticle(ArticleDO articleDO);
+  ResponseVo deleteArticle(ArticleDO articleDO);
 
-  Map<String, Object> recoveryArticle(ArticleDO articleDO);
+  ResponseVo recoveryArticle(ArticleDO articleDO);
 
-  Map<String, Object> getRecycleBinArticle(ArticleDO articleDO);
+  ResponseVo getRecycleBinArticle(ArticleDO articleDO);
 }

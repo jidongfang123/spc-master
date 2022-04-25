@@ -4,6 +4,8 @@ import com.example.client.model.ArticleDO;
 import com.example.client.service.ArticleService;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.client.util.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("saveArticle")
-  public Map<String,Object> saveArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo saveArticle(@RequestBody ArticleDO articleDO){
     return articleService.insertSelective(articleDO);
   }
 
@@ -35,7 +37,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("listArticle")
-  public Map<String,Object> listArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo listArticle(@RequestBody ArticleDO articleDO){
     return articleService.getListArticle(articleDO);
   }
 
@@ -45,7 +47,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("updateArticle")
-  public Map<String,Object> updateArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo updateArticle(@RequestBody ArticleDO articleDO){
     return articleService.updateArticle(articleDO);
   }
 
@@ -55,7 +57,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("deleteArticle")
-  public Map<String,Object> deleteArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo deleteArticle(@RequestBody ArticleDO articleDO){
     return articleService.deleteArticle(articleDO);
   }
 
@@ -65,7 +67,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("recoveryArticle")
-  public Map<String,Object> recoveryArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo recoveryArticle(@RequestBody ArticleDO articleDO){
     return articleService.recoveryArticle(articleDO);
   }
 
@@ -75,7 +77,7 @@ public class ArticleController {
    * @return
    */
   @PostMapping("recycleBinArticle")
-  public Map<String,Object> recycleBinArticle(@RequestBody ArticleDO articleDO){
+  public ResponseVo recycleBinArticle(@RequestBody ArticleDO articleDO){
     return articleService.getRecycleBinArticle(articleDO);
   }
 
