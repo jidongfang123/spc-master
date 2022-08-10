@@ -52,8 +52,8 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.client.model
 tencen:
-  secretId: AKIDa1ECvPedNr65oIXWFjyxOaXEfrnUw98r
-  secretKey: Xoqc9QSFm46tRjlY5MNEqDKBn9G7i4A0
+  secretId: 
+  secretKey: 
 # 分页配置
 pagehelper:
   helper-dialect: mysql
