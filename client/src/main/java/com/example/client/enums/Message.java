@@ -13,7 +13,8 @@ public enum Message {
     ERROR_TOKEN_EXPIRE(500, "token过期"),
     ERROR_TOKEN_ALGORITHMMISMATCH(500, "算法验证失败"),
     ERROR_TOKEN_EXECTION(500, "无效签名"),
-    ERROR_DB_EXECTION(500, "数据库异常");
+    ERROR_DB_EXECTION(500, "数据库异常"),
+    ERROR_NOT_VERIFICATION(500, "验证码失效");
 
     private int code;
     private String message;

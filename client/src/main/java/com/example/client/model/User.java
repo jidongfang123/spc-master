@@ -3,9 +3,12 @@ package com.example.client.model;
 import lombok.Data;
 
 import java.util.Date;
+/**
+ * @author jidongfang
+ */
 @Data
 public class User {
-    private Integer useid;
+    private Integer userid;
 
     private String username;
 
@@ -16,4 +19,8 @@ public class User {
     private Date updateTime;
 
     private String phone;
+
+    private String verificationCode;
+
+    private String token;
 }

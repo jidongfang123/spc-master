@@ -6,9 +6,13 @@ import com.example.client.model.ArticleDO;
 import com.example.client.model.ArticleDOExample;
 import com.example.client.service.ArticleService;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 
 import com.example.client.util.ResponseVo;
@@ -27,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
         ResponseVo responseVo = new ResponseVo();
         articleDO.setCerateTime(new Date());
         articleDO.setUpdateTime(new Date());
-        int falg = articleMapper.insertSelective(articleDO);
+        int falg = articleMapper.insertOrUpdateSelective(articleDO);
         if (falg > 0) {
             responseVo.setCode(Message.OK.getCode());
             responseVo.setMessage(Message.OK.getMessage());
@@ -38,14 +42,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ResponseVo getListArticle(ArticleDO articleDO) {
+        //分页(原理是动态代理,非侵入式,会在下面执行sql的后面追加上一些sql语句,具体可以看打印日志)
+       PageHelper.startPage(articleDO.getCurrentPage(), articleDO.getPageSize());
         ResponseVo responseVo = new ResponseVo();
         ArticleDOExample example = new ArticleDOExample();
         example.createCriteria().andCreateUseridEqualTo(articleDO.getCreateUserid()).andFalgEqualTo(1);
         try {
             List<ArticleDO> articleDOS = articleMapper.selectByExample(example);
+            //获取总条数
+            Long total = ((Page)articleDOS).getTotal();
+            Map<String,Object> map = new HashMap<>();
             responseVo.setCode(Message.OK.getCode());
             responseVo.setMessage(Message.OK.getMessage());
-            responseVo.setData(articleDOS);
+            map.put("data",articleDOS);
+            map.put("total",total);
+            responseVo.setData(map);
 
         } catch (Exception e) {
             responseVo.setCode(Message.FAIL.getCode());

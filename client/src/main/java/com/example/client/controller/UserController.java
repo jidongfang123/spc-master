@@ -6,19 +6,24 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.client.enums.Message;
 import com.example.client.model.User;
 import com.example.client.service.UserService;
+import com.example.client.util.JwtUtil;
+import com.example.client.util.RedisUtil;
 import com.example.client.util.ResponseVo;
-import com.example.gateways.uitl.JwtUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@CrossOrigin
 @RestController
 @RequestMapping("user")
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      * 创建用户
@@ -28,6 +33,17 @@ public class UserController {
      */
     @PostMapping("createUser")
     public ResponseVo createUser(@RequestBody User user) {
+        ResponseVo responseVo = new ResponseVo();
+        String code = (String) redisUtil.get(user.getPhone());
+        if (StringUtils.isBlank(code)){
+            responseVo.setMessage(Message.ERROR_NOT_VERIFICATION.getMessage());
+            responseVo.setCode(Message.ERROR_NOT_VERIFICATION.getCode());
+            return responseVo;
+        }else if(!code.equals(user.getVerificationCode())){
+            responseVo.setMessage(Message.ERROR_VERIFICATION_CODE.getMessage());
+            responseVo.setCode(Message.ERROR_VERIFICATION_CODE.getCode());
+            return responseVo;
+        }
         return userService.createUser(user);
     }
 
@@ -48,7 +64,11 @@ public class UserController {
             String token = JwtUtil.getToken(payload);
             responseVo.setCode(Message.OK.getCode());
             responseVo.setMessage(Message.OK.getMessage());
-            responseVo.setData(token);
+            User loginUser = new User();
+            loginUser.setToken(token);
+            loginUser.setUserid(userDb.getUserid());
+            loginUser.setUsername(userDb.getUsername());
+            responseVo.setData(loginUser);
         } catch (Exception e) {
             responseVo.setCode(Message.FAIL.getCode());
             responseVo.setMessage(e.getMessage());

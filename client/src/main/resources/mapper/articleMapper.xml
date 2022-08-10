@@ -240,4 +240,83 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="insertOrUpdateSelective"  parameterType="com.example.client.model.ArticleDO">
+    <selectKey keyProperty="count" resultType="int" order="BEFORE">
+    select count(1) from t_article where id= #{id}
+  </selectKey>
+    <if test="count > 0">
+    update t_article
+    <set >
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserid != null" >
+        create_userid = #{createUserid,jdbcType=INTEGER},
+      </if>
+      <if test="falg != null" >
+        falg = #{falg,jdbcType=INTEGER},
+      </if>
+      <if test="cerateTime != null" >
+        cerate_time = #{cerateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="count==0">
+      insert into t_article
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          id,
+        </if>
+        <if test="text != null" >
+          text,
+        </if>
+        <if test="createUser != null" >
+          create_user,
+        </if>
+        <if test="createUserid != null" >
+          create_userid,
+        </if>
+        <if test="falg != null" >
+          falg,
+        </if>
+        <if test="cerateTime != null" >
+          cerate_time,
+        </if>
+        <if test="updateTime != null" >
+          update_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          #{id,jdbcType=INTEGER},
+        </if>
+        <if test="text != null" >
+          #{text,jdbcType=VARCHAR},
+        </if>
+        <if test="createUser != null" >
+          #{createUser,jdbcType=VARCHAR},
+        </if>
+        <if test="createUserid != null" >
+          #{createUserid,jdbcType=INTEGER},
+        </if>
+        <if test="falg != null" >
+          #{falg,jdbcType=INTEGER},
+        </if>
+        <if test="cerateTime != null" >
+          #{cerateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null" >
+          #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    </if>
+  </update>
 </mapper>

@@ -46,6 +46,8 @@ public interface ArticleMapper {
      */
     int insertSelective(ArticleDO record);
 
+    int insertOrUpdateSelective(ArticleDO record);
+
     /**
      * 查询列表
      * @param example

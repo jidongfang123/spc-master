@@ -14,6 +14,9 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author jidongfang
+ */
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {

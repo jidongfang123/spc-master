@@ -19,59 +19,14 @@ public class ArticleDO {
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
+    private Integer currentPage =1;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Integer pageSize =5;
 
-    public String getText() {
-        return text;
-    }
 
-    public void setText(String text) {
-        this.text = text == null ? null : text.trim();
-    }
+    /**
+     * 该字段为非业务字段。Mybatis配置文件需要要到该字段，方便进行insertOrUpdate操作
+     */
+    private int count;
 
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Integer getCreateUserid() {
-        return createUserid;
-    }
-
-    public void setCreateUserid(Integer createUserid) {
-        this.createUserid = createUserid;
-    }
-
-    public Integer getFalg() {
-        return falg;
-    }
-
-    public void setFalg(Integer falg) {
-        this.falg = falg;
-    }
-
-    public Date getCerateTime() {
-        return cerateTime;
-    }
-
-    public void setCerateTime(Date cerateTime) {
-        this.cerateTime = cerateTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

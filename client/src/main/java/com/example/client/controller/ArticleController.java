@@ -2,11 +2,9 @@ package com.example.client.controller;
 
 import com.example.client.model.ArticleDO;
 import com.example.client.service.ArticleService;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.example.client.util.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author jidongfang
  */
+@CrossOrigin
 @RestController
 @RequestMapping("article")
 public class ArticleController {
